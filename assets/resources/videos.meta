@@ -1,0 +1,12 @@
+{
+  "ver": "1.1.2",
+  "uuid": "d8690264-ceb4-4b82-87f6-625beb5503dc",
+  "isBundle": false,
+  "bundleName": "videos",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

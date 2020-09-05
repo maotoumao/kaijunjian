@@ -1,0 +1,70 @@
+{
+    "ready" : {
+        "next": "prologue-1"
+    },
+    "prologue-1" : {
+        "script": "我是… 四年级学生森下下士！！ 是来监管你们的！！",
+        "video": "Sub_01",
+        "role": "森下下士",
+        "next": "prologue-2"
+    },
+    "prologue-2": {
+        "script": "我们高年级学生，是你们最好的… 老大哥！！",
+        "role": "森下下士",
+        "video": "Sub_02",
+        "next": "prologue-3"
+    },
+    "prologue-3": {
+        "script": "你们有不懂的事，可以问我们！ 我们会亲切地告诉你们！",
+        "role": "森下下士",
+        "video": "Sub_03",
+        "next": "prologue-4"
+    },
+    "prologue-4": {
+        "script": "现在，请大家做自我介绍！！",
+        "role": "森下下士",
+        "video": "Sub_04",
+        "next": "prologue-5"
+    },
+    "prologue-5": {
+        "script": "每人把自己原来的学校、姓名，介绍一下！！",
+        "role": "森下下士",
+        "video": "Sub_05",
+        "next": "prologue-6"
+    },
+    "prologue-6": {
+        "script": "从你那，开始！！！",
+        "role": "森下下士",
+        "video": "Sub_06",
+        "next": "wait-for-input"
+    },
+    "wait-for-input": {
+        "script": "(对着麦克风，大声喊出君の名は)",
+        "video": "Sub_wait",
+        "loop": true
+    },
+    "tingbujian-0": {
+        "script": "听不清！根本听不见，听不见！声音太小了！重来！重来！！重来！！！",
+        "video": "tbj0",
+        "role": "森下下士",
+        "next": "wait-for-input"
+    },
+    "tingbujian-1": {
+        "script": "没有劲儿！听不见！根本听不见！！！重来！！重来！！！这么小声还想开军舰！！！",
+        "video": "tbj1",
+        "role": "森下下士",
+        "next": "wait-for-input"
+    },
+    "tingbujian-2": {
+        "script": "在海军学校，四年级学生说听不见，就是听不见！！！重来！！！",
+        "video": "tbj2",
+        "role": "森下下士",
+        "next": "wait-for-input"
+    },
+    "jingshen": {
+        "script": "好！很有精神！！ 下一个！！",
+        "role":"森下下士",
+        "video": "jingshen",
+        "next": "wait-for-input"
+    }
+}
