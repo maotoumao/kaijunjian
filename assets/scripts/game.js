@@ -86,6 +86,20 @@ cc.Class({
 
     },
 
+    onSetLevel(e){
+        switch(e.target.name){
+            case 'toggle easy': 
+                this.jingshenLevel = 0.3;
+                break;
+            case 'toggle middle':
+                this.jingshenLevel = 0.5;
+                break;
+            case 'toggle hard':
+                this.jingshenLevel = 0.7;
+                break;
+        }
+    },
+
     _innerStartRecording() {
         navigator.mediaDevices.getUserMedia({
             audio: true
@@ -102,7 +116,7 @@ cc.Class({
         });
     },
 
-    _avg(arr){
+    _avg(arr) {
         return arr.reduce((prev, curr) => prev + curr, 0) / arr.length;
     },
 
@@ -113,9 +127,9 @@ cc.Class({
 
         const avg = this._avg(this.slideWindow);
         const currState = this.audioState;
-        if(currState === AUDIO_STATE_READY){
+        if (currState === AUDIO_STATE_READY) {
             // 就绪状态下，检测到高于环境音量，则开始录音
-            if(avg > this.environmentLevel){
+            if (avg > this.environmentLevel) {
                 this.audioWindow = [...this.slideWindow];
                 this.audioState = AUDIO_STATE_RECORDING;
                 return;
@@ -124,50 +138,50 @@ cc.Class({
         }
 
         //录音状态下，如果4秒内的语音没有劲儿，就重来(按60fps算)
-        if(currState === AUDIO_STATE_RECORDING){
+        if (currState === AUDIO_STATE_RECORDING) {
             this.audioWindow.push(amplitude);
-            if(this.audioWindow.length > 4 * 60){
+            if (this.audioWindow.length > 4 * 60) {
                 console.log('4s');
                 // 是否有劲?
-                if(this._avg(this.audioWindow) < this.jingshenLevel) {
+                if (this._avg(this.audioWindow) < this.jingshenLevel) {
                     // 根本听不见
                     this.audioState = AUDIO_STATE_TBJ;
                 }
                 this.audioWindow.shift();
-                
+
             }
 
             // 是否停止
-            if(avg < this.environmentLevel){
+            if (avg < this.environmentLevel) {
+                // 根本听不见
+                // console.log('???val', this._avg(this.audioWindow.filter(val => val > this.environmentLevel)));
                 // 如果不够4秒，并且没劲
-                if(this.audioWindow.length < 4 * 60){
-                    if(this._avg(this.audioWindow.filter(val => val > this.environmentLevel)) < this.jingshenLevel) {
-                        // 根本听不见
-                        console.log('???val',this._avg(this.audioWindow.filter(val => val > this.environmentLevel)));
+                if (this.audioWindow.length < 4 * 60) {
+                    if (this._avg(this.audioWindow.filter(val => val > this.environmentLevel)) < this.jingshenLevel) {
                         this.audioState = AUDIO_STATE_TBJ;
                         return;
                     }
-                } 
+                }
                 // 好，很有精神!
                 this.audioState = AUDIO_STATE_JINGSHEN;
             }
         }
 
-        if (currState === AUDIO_STATE_TBJ){
+        if (currState === AUDIO_STATE_TBJ) {
             // 随机进入一个聋子状态
             this._innerStateNext(`tingbujian-${Math.floor(Math.random() * 3)}`);
             // 停止录音
-            if(this.audioStream){
+            if (this.audioStream) {
                 const track = this.audioStream.getTracks()[0];
                 track.stop();
             }
             this.audioState = AUDIO_STATE_WAITING;
         }
 
-        if(currState === AUDIO_STATE_JINGSHEN) {
+        if (currState === AUDIO_STATE_JINGSHEN) {
             this._innerStateNext('jingshen');
             // 停止录音
-            if(this.audioStream){
+            if (this.audioStream) {
                 const track = this.audioStream.getTracks()[0];
                 track.stop();
             }
@@ -221,11 +235,14 @@ cc.Class({
 
         // 加载bgm
         this.bgm = cc.audioEngine.playMusic(this.bgmClip, true);
+        // 随机设置tips
+        this.menu.getChildByName('tips').getComponent(cc.Label).string = 'tips: ' + ['我们遇到什么困难，也不要怕，微笑着面对它。消除恐惧的最好办法就是面对恐惧，坚持，才是胜利！加油，奥利给！', '你吼那么大声干什么嘛', '十七张牌，你能秒我？', '玩游戏一定要笑着玩', '这么小声还想开军舰？' ][Math.floor(Math.random() * 5)];
+
     },
 
     start() {
         // 事件
-        this.dialog.on(cc.Node.EventType.MOUSE_DOWN, this.onDialogClick, this)
+        this.dialog.on(cc.Node.EventType.MOUSE_DOWN, this.onDialogClick, this);
     },
 
     update(dt) {
